@@ -5,14 +5,7 @@
 <head>
    <meta charset="utf-8">
    <title>Deflix - Debrid flicks</title>
-   <style>
-      html {
-         width: 100%;
-         height: 100%;
-         background: url(images/Logo-500px.png) center center no-repeat;
-         background-color: black;
-      }
-   </style>
+   <link rel="stylesheet" href="../styles.css" />
    <!-- Fathom - simple website analytics - https://github.com/usefathom/fathom -->
    <script>
    (function(f, a, t, h, o, m){
@@ -30,6 +23,21 @@
    <!-- / Fathom -->
 </head>
 
-<body />
+<body>
+    <img src="./images/deflix-logo.jpg" style="width: 200px; padding: 25px 0px 15px; margin-left: calc(50% - 100px);">
+    <h1>Deflix - Debrid flicks</h1>
+    <p style="margin-bottom: 32px; font-size: 32px;">Deflix ❤️ Stremio</p>
+    <h2>Stremio addons:</h2>
+    <div class="container">
+      <h3>1. Deflix</h3>
+      <p style="margin-bottom: 32px;">Looks up your selected movie on YTS, The Pirate Bay, 1337x and ibit and automatically turns your selected torrent into a debrid/cached stream, for high speed and <b>no P2P uploading</b>.</p>
+      <a href="./stremio" class="install-button" title="INSTALL">INSTALL</a>
+    </div>
+    <div class="container">
+      <h3>2. Top Movies</h3>
+      <p style="margin-bottom: 32px;">Multiple catalogs of top movie lists: IMDb Top 250, IMDb Most Popular, Top Box Office (US), Rotten Tomatoes Certified Fresh Movies, Academy Award for Best Picture, Cannes Film Festival Palme d'Or winners</p>
+      <a href="stremio://stremio-top-movies.deflix.tv/manifest.json" class="install-button" title="INSTALL">INSTALL</a>
+    </div>
+</body>
 
 </html>
