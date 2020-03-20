@@ -20,7 +20,6 @@ var questions = [
 */
 
 var onComplete = function() {
-    document.getElementById('note').classList.remove('is-visible');
     document.getElementById('end-note').innerHTML = "<br/><br/>Or copy this link: <span id='link-block'>https://stremio.deflix.tv/" + questions[0].answer + "/manifest.json</span><br/><br/>And paste it in Stremio's addon search field.";
     var h2 = document.createElement('h2');
     var a = document.createElement('a');
