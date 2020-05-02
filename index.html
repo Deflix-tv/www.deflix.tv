@@ -1,45 +1,243 @@
 <!DOCTYPE html>
-
-<html>
+<html lang="en">
 
 <head>
+   <link rel="icon" href="/favicon.ico">
+   <link rel="stylesheet" href="/mvp.css">
+   <link rel="stylesheet" href="/deflix.css">
+
    <meta charset="utf-8">
+   <meta name="description" content="Debrid flicks - stream movies without torrenting">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
    <title>Deflix - Debrid flicks</title>
-   <link rel="stylesheet" href="../styles.css" />
+
    <!-- Fathom - simple website analytics - https://github.com/usefathom/fathom -->
    <script>
-   (function(f, a, t, h, o, m){
-      a[h]=a[h]||function(){
-         (a[h].q=a[h].q||[]).push(arguments)
-      };
-      o=f.createElement('script'),
-      m=f.getElementsByTagName('script')[0];
-      o.async=1; o.src=t; o.id='fathom-script';
-      m.parentNode.insertBefore(o,m)
-   })(document, window, '//fathom.deflix.tv/tracker.js', 'fathom');
-   fathom('set', 'siteId', 'HWVDW');
-   fathom('trackPageview');
+      (function (f, a, t, h, o, m) {
+         a[h] = a[h] || function () {
+            (a[h].q = a[h].q || []).push(arguments)
+         };
+         o = f.createElement('script'),
+            m = f.getElementsByTagName('script')[0];
+         o.async = 1; o.src = t; o.id = 'fathom-script';
+         m.parentNode.insertBefore(o, m)
+      })(document, window, '//fathom.deflix.tv/tracker.js', 'fathom');
+      fathom('set', 'siteId', 'HWVDW');
+      fathom('trackPageview');
    </script>
    <!-- / Fathom -->
 </head>
 
 <body>
-    <a href="/"><img src="./images/deflix-logo.jpg" style="width: 200px; padding: 25px 0px 15px; margin-left: calc(50% - 100px);"></a>
-    <h1>Deflix - Debrid flicks</h1>
-    <p style="margin-bottom: 32px; font-size: 32px;">Deflix ❤️ <a href="https://www.stremio.com" target="_blank" style="color: white;">Stremio</a></p>
-    <h2>Stremio addons:</h2>
-    <div class="container">
-      <h3>1. Deflix</h3>
-      <p>Looks up your selected movie on YTS, The Pirate Bay, 1337x and ibit and automatically turns your selected torrent into a debrid/cached stream, for high speed and <b>no P2P uploading</b>.</p>
-      <br>
-      <p style="margin-bottom: 32px;">Upcoming features: Support for TV shows, Premiumize.me support, more custom options (e.g. show ALL single torrents instead of grouped by quality) and more</p>
-      <a href="./stremio" class="install-button" title="INSTALL">INSTALL</a>
-    </div>
-    <div class="container">
-      <h3>2. Top Movies</h3>
-      <p style="margin-bottom: 32px;">Multiple catalogs of top movie lists: IMDb Top 250, IMDb Most Popular, Top Box Office (US), Rotten Tomatoes Certified Fresh Movies, Academy Award for Best Picture, Cannes Film Festival Palme d'Or winners</p>
-      <a href="stremio://stremio-top-movies.deflix.tv/manifest.json" class="install-button" title="INSTALL">INSTALL</a>
-    </div>
+   <header>
+      <nav>
+         <a href="/"><img alt="Deflix" src="/images/Letters.png" width=120px></a>
+         <ul>
+            <li>Home</li>
+            <li><a href="#addons">Stremio addons</a></li>
+            <li><a href="#comparison">Comparison</a></li>
+            <li><a href="#faq">FAQ</a></li>
+            <li><a href="https://github.com/Deflix-tv" target="_blank">GitHub ↗</a></li>
+         </ul>
+      </nav>
+      <img alt="D" src="/images/Logo.png" width=150px>
+      <h1>Deflix - Debrid flicks</h1>
+      <p>Stream movies <em>without torrenting</em>.</p>
+   </header>
+   <main>
+      <hr>
+      <section id="addons">
+         <header>
+            <h2>Stremio addons</h2>
+            <p>Deflix ❤️ <a href="https://www.stremio.com/" target="_blank">Stremio ↗</a>.</p>
+            <div>
+               <p><a href="https://www.stremio.com/" target="_blank">Stremio ↗</a> is a modern media center that's a
+                  one-stop solution for your video entertainment. You discover, watch and organize video content from
+                  easy to install addons.</p>
+               <p>These addons run remotely as a web service, so they can't do any harm to your computer. This is
+                  different from how addons work for Kodi for example, where they run locally on your computer and have
+                  dozens of third party dependencies. There have been several security incidents with Kodi addons like
+                  <a href="https://www.reddit.com/r/Addons4Kodi/comments/axhmcw/public_service_announcement_remove_civitas_repo/"
+                     target="_blank">this one ↗</a> and even the Kodi developers themselves <a
+                     href="https://kodi.tv/article/warning-be-aware-what-additional-add-ons-you-install"
+                     target="_blank">warn of the dangers of third party Kodi addons ↗</a> .</p>
+            </div>
+         </header>
+         <aside>
+            <h3>Deflix</h3>
+            <p>Finds movies from various sources (YTS, The Pirate Bay, 1337x and ibit) and automatically turns them into
+               cached HTTP streams from <a href="https://real-debrid.com" target="_blank">RealDebrid ↗</a>, for high
+               speed 4k streaming and <mark>no P2P uploading</mark>.</p>
+            <p>Upcoming features:</p>
+            <ul>
+               <li>Support for <em>TV shows</em></li>
+               <li><a href="https://premiumize.me" target="_blank">Premiumize.me ↗</a> support</li>
+               <li>More sources (RARBG and others)</li>
+               <li>More custom options (e.g. show <em>all</em> torrents instead of grouped by quality)</li>
+               <li>And more...</li>
+            </ul>
+            <p><a href="/stremio/#install"><b>Install ↗</b></a></p>
+            <p><a href="https://www.github.com/doingodswork/deflix-stremio" target="_blank">Source code ↗</a></p>
+         </aside>
+         <aside>
+            <h3>Top movies</h3>
+            <p>Contains multiple catalogs of top movies:</p>
+            <ul>
+               <li>IMDb Top 250</li>
+               <li>IMDb Most Popular</li>
+               <li>Top Box Office (US)</li>
+               <li>Rotten Tomatoes Certified Fresh Movies</li>
+               <li>Academy Award for Best Picture</li>
+               <li>Cannes Film Festival Palme d'Or winners</li>
+               <li>Venice Film Festival Golden Lion</li>
+               <li>Berlin International Film Festival Golden Bear</li>
+            </ul>
+            <p><a href="stremio://stremio-top-movies.deflix.tv/manifest.json"><b>Install</b></a></p>
+            <p><a href="https://www.github.com/doingodswork/stremio-top-movies" target="_blank">Source code ↗</a></p>
+         </aside>
+      </section>
+      <hr>
+      <section id="comparison">
+         <header>
+            <h2>Deflix vs. torrents comparison</h2>
+            <p>What's the big deal about Deflix and debrid services?</p>
+         </header>
+         <table>
+            <thead>
+               <tr>
+                  <th></th>
+                  <th>Deflix</th>
+                  <th>Torrents</th>
+               </tr>
+            </thead>
+            <tr>
+               <td>Fast 4k streaming</td>
+               <td>✔️</td>
+               <td>❌<sup>1</sup></td>
+            </tr>
+            <tr>
+               <td>Works despite 0 seeders</td>
+               <td>✔️<sup>2</sup></td>
+               <td>❌</td>
+            </tr>
+            <tr>
+               <td>Safe without a VPN</td>
+               <td>✔️<sup>3</sup></td>
+               <td>❌<sup>4</sup></td>
+            </tr>
+            <tr>
+               <td>Is free</td>
+               <td>❌<sup>5</sup></td>
+               <td>✔️</td>
+            </tr>
+         </table>
+         <footer>
+            <p><sup>1</sup> Only with torrents that have many seeders</p>
+            <p><sup>2</sup> Debrid services <em>cache</em> torrents. Often for 15 or 30 days. If a movie isn't cached,
+               you can request the service to download it for you and it will do so in the background. Afterwards it's
+               instantly available again for 15/30 days.</p>
+            <p><sup>3</sup> Your IP address is only exposed to the debrid service. Also see the <a href="#safe">FAQ
+                  answer</a> regarding why debrid services are safer than torrenting.</p>
+            <p><sup>4</sup> Your IP address is exposed to other BitTorrent users. Also see the <a href="#danger">FAQ
+                  answer</a> regarding the dangers of torrenting.</p>
+            <p><sup>5</sup> Most debrid services charge a monthly rate, starting at $3.00 per month</p>
+         </footer>
+      </section>
+      <hr>
+      <article id="faq">
+         <header>
+            <h2>FAQ</h2>
+            <p>Frequently asked questions</p>
+         </header>
+         <details>
+            <summary>What does "Deflix" mean?</summary>
+            <p><em>Deflix</em> stands for <em>debrid flicks</em>.</p>
+            <p><em>Flick</em> is informal for <em>motion
+                  picture</em>. And the flicks are streamed via a <em>debrid service</em> (see below).</p>
+         </details>
+         <details>
+            <summary>What is a debrid service / MOCH?</summary>
+            <p>Debrid services like <a href="https://real-debrid.com" target="_blank">RealDebrid ↗</a>, <a
+                  href="https://premiumize.me" target="_blank">Premiumize.me ↗</a> and <a href="https://alldebrid.com"
+                  target="_blank">AllDebrid ↗</a> mainly do two things:</p>
+            <ol>
+               <li>They <em>cache</em> the files from torrents.<br>
+                  So instead of having to slowly download a torrent by yourself (which also uploads it at the same
+                  time), you can <em>directly</em> download the files from a torrent from their servers via HTTP,
+                  without uploading anything. This also means you can stream movies in 4k from them!
+               </li>
+               <li>They act as <em>MOCH</em> (Multi One-Click Hoster).<br>
+                  This means you can use your debrid service account's credentials to access OCHs like MEGA>,
+                  uploaded.net, Rapidgator and many others.
+               </li>
+            </ol>
+         </details>
+         <details>
+            <summary>What is Stremio? And what's its advantage over Kodi?</summary>
+            <p><a href="https://www.stremio.com/" target="_blank">Stremio ↗</a> is a modern media center that's a
+               one-stop solution for your video entertainment. You discover, watch and organize video content from easy
+               to install addons.</p>
+            <p>These addons run remotely as a web service, so they can't do any harm to your computer. This is different
+               from how addons work for Kodi for example, where they run locally on your computer and have dozens of
+               third party dependencies. There have been several security incidents with Kodi addons like <a
+                  href="https://www.reddit.com/r/Addons4Kodi/comments/axhmcw/public_service_announcement_remove_civitas_repo/"
+                  target="_blank">this one ↗</a> and even the Kodi developers themselves <a
+                  href="https://kodi.tv/article/warning-be-aware-what-additional-add-ons-you-install"
+                  target="_blank">warn of the dangers of third party Kodi addons ↗</a> .</p>
+         </details>
+         <details id="danger">
+            <summary>Why is torrenting dangerous?</summary>
+            <p>When you download a torrent with a torrent software like µTorrent or qBittorrent, or even when you stream
+               a torrent with a <em>torrent addon</em> for
+               Stremio, your computer will upload the torrent via the BitTorrent P2P network at the same time.</p>
+            <p>If you don't use a VPN, this exposes your IP address to the other participants in the network. So a
+               lawyer hired by a movie company can see that you download their movie, note your IP address, get a court
+               order with that "evidence" (many courts judge that the collected info is enough) and with that ask your
+               ISP (Internet service provider) for your identity. The ISPs have to comply in this case because they're
+               legally required to do so.</p>
+            <p>In many cases this only leads to a warning at first and later to the ISP cutting off your Internet if you
+               don't comply. But in some cases it can also lead to a lawsuit, fines etc. It depends on the country you
+               live in.</p>
+         </details>
+         <details id="safe">
+            <summary>Is streaming from a debrid service safe?</summary>
+            <p>When not using a VPN, you're only exposing your IP address to the debrid service you're using. Without a
+               court order, a lawyer can't request IP addresses of the service's users from that service. And without
+               any "evidence" (like a lawyer seeing IP addresses in the BitTorrent network downloading movies) the
+               lawyer doesn't get a court order. The only risk is the debrid service openly cooperating with lawyers and
+               freely giving out information about its users without proper court orders.</p>
+         </details>
+         <details>
+            <summary>How do you make money?</summary>
+            <p>We don't make any money with this. We don't display ads anywhere and don't sell any premium access.
+               Currently our costs are fairly low and are comprised only of running several servers across several cloud
+               providers and paying for the domain.
+            </p>
+            <p>If our costs rise due to an increased amount of users and required infrastructure, we'll first try to
+               compensate that with donations via Bitcoin.</p>
+            <p>If that's not enough we'll try to partner with companys that might benefit from our service, like debrid
+               services or Stremio.</p>
+            <p>If that's still not enough we'll try to find another way in collaboration with you, our users, and the
+               wider community if possible.</p>
+         </details>
+         <details>
+            <summary>Is Deflix doing anything illegal?</summary>
+            <p>No.</p>
+            <p>Deflix</p>
+            <ul>
+               <li>doesn't <em>host</em> any media files or torrents</li>
+               <li>doesn't <em>provide link lists</em> to media files or torrents</li>
+               <li>isn't a <em>torrent indexer</em></li>
+               <li>doesn't <em>facilitate the sharing</em> of any media files or torrents</li>
+            </ul>
+         </details>
+      </article>
+   </main>
+   <footer>
+      <hr>
+      <p>Made by <em><a href="https://www.github.com/doingodswork/" target="_blank">doingodswork ↗</a></em></p>
+   </footer>
 </body>
 
 </html>

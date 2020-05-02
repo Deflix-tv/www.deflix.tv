@@ -1,59 +1,122 @@
 <!DOCTYPE html>
-
-<html>
+<html lang="en">
 
 <head>
-   <meta charset="utf-8">
-   <title>Deflix - Debrid flicks</title>
-   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" />
-   <link rel="stylesheet" href="../styles.css" />
-   <!-- Fathom - simple website analytics - https://github.com/usefathom/fathom -->
-   <script>
-   (function(f, a, t, h, o, m){
-      a[h]=a[h]||function(){
-         (a[h].q=a[h].q||[]).push(arguments)
+  <link rel="icon" href="/favicon.ico">
+  <link rel="stylesheet" href="/mvp.css">
+  <link rel="stylesheet" href="/deflix.css">
+
+  <meta charset="utf-8">
+  <meta name="description" content="Debrid flicks - stream movies without torrenting">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Deflix - Debrid flicks</title>
+
+  <!-- Fathom - simple website analytics - https://github.com/usefathom/fathom -->
+  <script>
+    (function (f, a, t, h, o, m) {
+      a[h] = a[h] || function () {
+        (a[h].q = a[h].q || []).push(arguments)
       };
-      o=f.createElement('script'),
-      m=f.getElementsByTagName('script')[0];
-      o.async=1; o.src=t; o.id='fathom-script';
-      m.parentNode.insertBefore(o,m)
-   })(document, window, '//fathom.deflix.tv/tracker.js', 'fathom');
-   fathom('set', 'siteId', 'HWVDW');
-   fathom('trackPageview');
-   </script>
-   <!-- / Fathom -->
+      o = f.createElement('script'),
+        m = f.getElementsByTagName('script')[0];
+      o.async = 1; o.src = t; o.id = 'fathom-script';
+      m.parentNode.insertBefore(o, m)
+    })(document, window, '//fathom.deflix.tv/tracker.js', 'fathom');
+    fathom('set', 'siteId', 'HWVDW');
+    fathom('trackPageview');
+  </script>
+  <!-- / Fathom -->
 </head>
 
 <body>
-    <div id="progress"></div>
+  <header>
+    <nav>
+      <a href="/"><img alt="Deflix" src="/images/Letters.png" width=120px></a>
+      <ul>
+        <li><a href="/">Home ↗</a></li>
+        <li>Stremio addon</li>
+        <li><a href="#install">Install</a></li>
+        <li><a href="https://github.com/Deflix-tv" target="_blank">GitHub ↗</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <article>
+      <header>
+        <h2>Deflix Stremio addon</h2>
+      </header>
+      <p><a href="https://www.stremio.com/" target="_blank">Stremio ↗</a> is a modern media center that's a
+        one-stop solution for your video entertainment. You discover, watch and organize video content from
+        easy to install addons.</p>
+      <p>These addons run remotely as a web service, so they can't do any harm to your computer. This is
+        different from how addons work for Kodi for example, where they run locally on your computer and have
+        dozens of third party dependencies. There have been several security incidents with Kodi addons like
+        <a href="https://www.reddit.com/r/Addons4Kodi/comments/axhmcw/public_service_announcement_remove_civitas_repo/"
+          target="_blank">this one ↗</a> and even the Kodi developers themselves <a
+          href="https://kodi.tv/article/warning-be-aware-what-additional-add-ons-you-install" target="_blank">warn of
+          the dangers of third party Kodi addons ↗</a> .</p>
+      <p>The <em>Deflix addon</em> finds movies from various sources (YTS, The Pirate Bay, 1337x and ibit) and automatically
+        turns them into cached HTTP streams from <a href="https://real-debrid.com" target="_blank">RealDebrid ↗</a>, for
+        high speed 4k streaming and <mark>no P2P uploading</mark>.</p>
+      <p>Upcoming features:</p>
+      <ul>
+        <li>Support for <em>TV shows</em></li>
+        <li><a href="https://premiumize.me" target="_blank">Premiumize.me ↗</a> support</li>
+        <li>More sources (<a href="https://rarbg.to" target="_blank">RARBG ↗</a> and others)</li>
+        <li>More custom options (e.g. show <em>all</em> torrents instead of grouped by quality)</li>
+        <li>And more...</li>
+      </ul>
+      <p><a href="https://www.github.com/doingodswork/deflix-stremio" target="_blank">Source code ↗</a></p>
+    </article>
+    <section id="install">
+      <header>
+        <h2>Install</h2>
+      </header>
+      <form>
+        <label>Get your RealDebrid API token from <a href="https://real-debrid.com/apitoken" target="_blank">here
+            ↗</a>.</label>
+        <label for="apitoken">RealDebrid API token:</label>
+        <input type="text" id="apitoken" placeholder="ABC123DEF...">
+        <input type="checkbox" id="remote"><label for="remote">Use "remote traffic"<sup>1</sup></label>
+        <br>
+        <button type="button" onclick="install(); return false;">Install</button>
+      </form>
+      <footer>
+        <p>ℹ️ If the installation form doesn't work, you can always just paste the addon URL into the search box in the
+          Stremio addon section:<br>
+          <samp>https://stremio.deflix.tv/YOUR-API-TOKEN/manifest.json</samp> (use your actual API
+          token though!)</p>
+        <p><sup>1</sup>) RealDebrid allows you to share your account with friends as long as they use your "remote
+          traffic", which has to be paid separately.<br>
+          ⚠️ When sharing your account and <em>not</em> using remote traffic, you might get suspended - see RealDebrid's
+          <a href="https://real-debrid.com/terms" target="_blank">terms ↗</a> and <a href="https://real-debrid.com/faq"
+            target="_blank">FAQ ↗</a>.</p>
+      </footer>
+    </section>
+  </main>
+  <footer>
+    <hr>
+    <p>Made by <em><a href="https://www.github.com/doingodswork/" target="_blank">doingodswork ↗</a></em></p>
+  </footer>
 
-    <a href="/"><img src="../images/deflix-logo.jpg" style="width: 200px; padding: 25px 0px 15px; margin-left: calc(50% - 100px);"></a>
-    <h1>Deflix addon for <a href="https://www.stremio.com" target="_blank" style="color: white;">Stremio</a></h1>
-    <p style="text-align: center;">Looks up your selected movie on YTS, The Pirate Bay, 1337x and ibit and automatically turns your selected torrent into a debrid/cached stream, for high speed and <b>no P2P uploading</b>.</p>
-    <br>
-    <p>Upcoming features: Support for TV shows, Premiumize.me support, more custom options (e.g. show ALL single torrents instead of grouped by quality) and more</p>
+  <script>
+    function install() {
+      var apiToken = document.getElementById("apitoken").value
+      var remote = document.getElementById("remote").checked
 
-    <p style="margin-top: 64px; color: white;">
-      Get your RealDebrid API token from <a href="https://real-debrid.com/apitoken" target="_blank" style="color: white;">this page</a>, then enter it below and click the green arrow!
-    </p>
-
-    <div class="center">
-      
-      <div id="register">
-        <i id="forwardButton" class="ion-android-arrow-forward"></i>
-        <div id="inputContainer">
-          <input id="inputField" type="text" required />
-          <label id="inputLabel"></label>
-        </div>
-        
-      </div>
-
-      <div id="end-note"></div>
-
-      
-      
-    </div>
-    <script src="./script.js"></script>
+      if (apiToken == null || apiToken.length === 0) {
+        document.getElementById("apitoken").style.backgroundColor = "#ff3333";
+      } else {
+        document.getElementById("apitoken").style.backgroundColor = "";
+        var config = apiToken
+        if (remote) {
+          config += "-" + remote
+        }
+        window.location.href = "stremio://stremio.deflix.tv/" + config + "/manifest.json";
+      }
+    }
+  </script>
 </body>
 
 </html>
