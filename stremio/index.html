@@ -102,16 +102,16 @@
 
   <script>
     function install() {
-      var apiToken = document.getElementById("apitoken").value
-      var remote = document.getElementById("remote").checked
+      var apiToken = document.getElementById("apitoken").value;
+      var remote = document.getElementById("remote").checked;
 
       if (apiToken == null || apiToken.length === 0) {
         document.getElementById("apitoken").style.backgroundColor = "#ff3333";
       } else {
         document.getElementById("apitoken").style.backgroundColor = "";
-        var config = apiToken
+        var config = apiToken;
         if (remote) {
-          config += "-" + remote
+          config += "-remote";
         }
         window.location.href = "stremio://stremio.deflix.tv/" + config + "/manifest.json";
       }
