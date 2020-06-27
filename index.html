@@ -159,10 +159,12 @@
             <p>Features:</p>
             <ul>
                <li>All required structs for creating a catalog or stream addon</li>
-               <li>Webserver with graceful shutdown</li>
+               <li>Web server with graceful shutdown</li>
+               <li>CORS middleware to allow requests from Stremio</li>
                <li>Health check endpoint</li>
-               <li>Optional profiling (<samp>go pprof</samp>)</li>
-               <li>Request logging</li>
+               <li>Optional profiling endpoints (for <samp>go pprof</samp>)</li>
+               <li>Optional request logging</li>
+               <li>Cache control and ETag handling</li>
             </ul>
             <p>Bug reports, feature requests and contributions are welcome!</p>
             <p><a href="https://www.github.com/Deflix-tv/go-stremio" target="_blank"><b>Source code ↗</b></a></p>
