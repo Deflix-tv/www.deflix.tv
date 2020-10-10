@@ -56,17 +56,10 @@
           target="_blank">this one ↗</a> and even the Kodi developers themselves <a
           href="https://kodi.tv/article/warning-be-aware-what-additional-add-ons-you-install" target="_blank">warn of
           the dangers of third party Kodi addons ↗</a> .</p>
-      <p>The <em>Deflix addon</em> finds movies from various sources (YTS, The Pirate Bay, 1337x and ibit) and automatically
-        turns them into cached HTTP streams from <a href="https://real-debrid.com" target="_blank">RealDebrid ↗</a>, for
-        high speed 4k streaming and <mark>no P2P uploading</mark>.</p>
-      <p>Upcoming features:</p>
-      <ul>
-        <li>Support for <em>TV shows</em></li>
-        <li><a href="https://premiumize.me" target="_blank">Premiumize.me ↗</a> support</li>
-        <li>More sources (<a href="https://rarbg.to" target="_blank">RARBG ↗</a> and others)</li>
-        <li>More custom options (e.g. show <em>all</em> torrents instead of grouped by quality)</li>
-        <li>And more...</li>
-      </ul>
+      <p>The <em>Deflix addon for Stremio</em> finds movies from many different sources (YTS, The Pirate Bay, 1337x, RARBG and ibit) and automatically
+        turns them into cached HTTP streams with a debrid service like <a href="https://real-debrid.com" target="_blank">RealDebrid ↗</a>
+        or <a href="https://alldebrid.com" target="_blank">AllDebrid ↗</a>, for high speed 4k streaming and <mark>no P2P uploading</mark>.</p>
+      <p>The addon is under constant development and more features will be added in the future: Support for <em>TV shows</em>, more sources, grouping by bitrate, more custom options (like language filter) and more.</p>
       <p><a href="https://www.github.com/doingodswork/deflix-stremio" target="_blank">Source code ↗</a></p>
     </article>
     <section id="install">
@@ -75,25 +68,43 @@
         <p>Here you can configure and then install the addon:</p>
       </header>
       <form>
-        <label>Get your RealDebrid API token from <a href="https://real-debrid.com/apitoken" target="_blank">here
-            ↗</a>.</label>
-        <label for="apitoken">RealDebrid API token:</label>
-        <input type="text" id="apitoken" placeholder="ABC123DEF...">
-        <input type="checkbox" id="remote"><label for="remote">Use "remote traffic"<sup>1</sup></label>
-        <br>
-        <button type="button" onclick="install(); return false;">Install</button>
+        <label for="debridService">Which debrid service do you use?</label>
+        <select name="debridService" id="debridService" required onchange="showForm()">
+          <option value="" selected>Choose...</option>
+          <option value="RealDebrid">RealDebrid</option>
+          <option value="AllDebrid">AllDebrid</option>
+        </select>
+        <div id="formRD" style="display: none;">
+          <label>Get your RealDebrid API token from <a href="https://real-debrid.com/apitoken" target="_blank">here
+              ↗</a>.</label>
+          <input type="text" id="apiToken" placeholder="ABC123DEF...">
+          <input type="checkbox" id="remote"><label for="remote">Use "remote traffic"<sup>1</sup></label>
+          <br>
+          <button type="button" onclick="installRD(); return false;">Install</button>
+          <div id="installInfoRD" style="display: none;">
+            <p>ℹ️ If the installation form doesn't work, you can just paste the addon URL into the search box in the
+              Stremio addon section:<br>
+              <input type="text" id="urlRD" readonly><button onclick="copy('urlRD'); return false;" title="Copy to clipboard">📋</button></p>
+          </div>
+          <p><sup>1</sup>) RealDebrid allows you to share your account with friends as long as they use your "remote
+            traffic", which has to be paid separately.<br>
+            ⚠️ When sharing your account and <em>not</em> using remote traffic, you might get suspended - see RealDebrid's
+            <a href="https://real-debrid.com/terms" target="_blank">terms ↗</a> and <a href="https://real-debrid.com/faq"
+              target="_blank">FAQ ↗</a>.</p>
+        </div>
+        <div id="formAD" style="display: none;">
+          <label>Get your AllDebrid API key from <a href="https://alldebrid.com/apikeys/" target="_blank">here
+              ↗</a>.</label>
+          <input type="text" id="apiKey" placeholder="ABC123DEF...">
+          <br>
+          <button type="button" onclick="installAD(); return false;">Install</button>
+          <div id="installInfoAD" style="display: none;">
+            <p>ℹ️ If the installation form doesn't work, you can just paste the addon URL into the search box in the
+              Stremio addon section:<br>
+            <input type="text" id="urlAD" readonly><button onclick="copy('urlAD'); return false;" title="Copy to clipboard">📋</button></p>
+          </div>
+        </div>
       </form>
-      <footer>
-        <p>ℹ️ If the installation form doesn't work, you can always just paste the addon URL into the search box in the
-          Stremio addon section:<br>
-          <samp>https://stremio.deflix.tv/YOUR-API-TOKEN/manifest.json</samp> (use your actual API
-          token though!)</p>
-        <p><sup>1</sup>) RealDebrid allows you to share your account with friends as long as they use your "remote
-          traffic", which has to be paid separately.<br>
-          ⚠️ When sharing your account and <em>not</em> using remote traffic, you might get suspended - see RealDebrid's
-          <a href="https://real-debrid.com/terms" target="_blank">terms ↗</a> and <a href="https://real-debrid.com/faq"
-            target="_blank">FAQ ↗</a>.</p>
-      </footer>
     </section>
   </main>
   <footer>
@@ -102,20 +113,62 @@
   </footer>
 
   <script>
-    function install() {
-      var apiToken = document.getElementById("apitoken").value;
+    function showForm() {
+      document.getElementById("formRD").style.display = "none";
+      document.getElementById("formAD").style.display = "none";
+      var service = document.getElementById("debridService").value;
+      
+      if (service === "RealDebrid") {
+        document.getElementById("formRD").style.display = "block";
+      } else if (service === "AllDebrid"){
+        document.getElementById("formAD").style.display = "block";
+      }
+    }
+
+    function installRD() {
+      var apiToken = document.getElementById("apiToken").value;
       var remote = document.getElementById("remote").checked;
 
       if (apiToken == null || apiToken.length === 0) {
-        document.getElementById("apitoken").style.backgroundColor = "#ff3333";
+        document.getElementById("apiToken").style.backgroundColor = "#ff3333";
       } else {
-        document.getElementById("apitoken").style.backgroundColor = "";
-        var config = apiToken;
+        document.getElementById("apiToken").style.backgroundColor = "";
+        userData = {rdToken: apiToken};
         if (remote) {
-          config += "-remote";
+          userData.rdRemote = true;
         }
-        window.location.href = "stremio://stremio.deflix.tv/" + config + "/manifest.json";
+        
+        encoded = encode(userData);
+        document.getElementById("urlRD").value = "https://stremio.deflix.tv/"+ encoded+"/manifest.json";
+        document.getElementById("installInfoRD").style.display = "block";
+        window.location.href = "stremio://stremio.deflix.tv/" + encoded + "/manifest.json";
       }
+    }
+
+    function installAD() {
+      var apiKey = document.getElementById("apiKey").value;
+
+      if (apiKey == null || apiKey.length === 0) {
+        document.getElementById("apiKey").style.backgroundColor = "#ff3333";
+      } else {
+        document.getElementById("apiKey").style.backgroundColor = "";
+        userData = {adKey: apiKey};
+
+        encoded = encode(userData);
+        document.getElementById("urlAD").value = "https://stremio.deflix.tv/"+ encoded+"/manifest.json";
+        document.getElementById("installInfoAD").style.display = "block";
+        window.location.href = "stremio://stremio.deflix.tv/" + encoded + "/manifest.json";
+      }
+    }
+
+    function encode(userData) {
+        // Encode to Base64, make URL-safe, remove padding (leading to Base64URL as described in RFC 4648).
+        return btoa(JSON.stringify(userData)).replace(/\+/g, '-').replace(/\//g, '_').split('=')[0]
+    }
+
+    function copy(id){
+      document.getElementById(id).select();
+      document.execCommand("copy");
     }
   </script>
 </body>
