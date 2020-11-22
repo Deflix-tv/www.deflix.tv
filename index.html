@@ -159,13 +159,14 @@
             <p>It contains everything you need to create a Stremio addon in Go, so you can focus on the content of your addon. Let the SDK take care of the boilerplate.</p>
             <p>Features:</p>
             <ul>
-               <li>All required structs for creating a catalog or stream addon</li>
+               <li>All required <em>types</em> for creating a catalog or stream addon</li>
                <li>Web server with graceful shutdown</li>
-               <li>CORS middleware to allow requests from Stremio</li>
-               <li>Health check endpoint</li>
-               <li>Optional profiling endpoints (for <samp>go pprof</samp>)</li>
+               <li>Health check endpoint and optional profiling endpoints (for <samp>go pprof</samp>)</li>
                <li>Optional request logging</li>
                <li>Cache control and ETag handling</li>
+               <li>Optional custom middlewares and endpoints</li>
+               <li>Custom user data, including the handling of Stremio's requests to the "/configure" endpoint</li>
+               <li>... and many more!</li>
             </ul>
             <p>Bug reports, feature requests and contributions are welcome!</p>
             <p><a href="https://www.github.com/Deflix-tv/go-stremio" target="_blank"><b>Source code ↗</b></a></p>
