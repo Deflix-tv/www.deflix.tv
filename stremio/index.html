@@ -130,47 +130,20 @@
 
       var service = document.getElementById("debridService").value;
 
-      // If no hash is set, we're on the initial configure page.
-      // Otherwise we're in the redirect after RealDebrid or Premiumize authorization.
-      // BUT a user could try to switch to one of the others.
-      if (window.location.hash == "" || service != ""){
-        if (service === "RealDebrid") {
-          document.getElementById("formRD").style.display = "block";
-        } else if (service === "AllDebrid"){
-          document.getElementById("formAD").style.display = "block";
-        } else if (service === "Premiumize"){
-          document.getElementById("formPM").style.display = "block";
-        }
-      } else {
-        userData = decode(window.location.hash.substring(1));
-        // If the decoding failed, maybe the user entered bogus data, potentially accidentally. Revert to regular page to start anew.
-        if (userData == null){
-          window.location.href = window.location.protocol+"//"+window.location.host+"/configure";
-        }else if (userData.rdOAUTH2 != null && userData.rdOAUTH2 != "") {
-          document.getElementById("debridService").value = "RealDebrid";
-          document.getElementById("initRDbutton").textContent = "Reauthorize Deflix";
-          document.getElementById("initRDbutton").style.backgroundColor = "#44aa44";
-          document.getElementById("initRDbutton").style.border = "#44aa44";
-          document.getElementById("installRDbutton").style.display = "block";
-          document.getElementById("remoteDiv").style.display = "block";
-          document.getElementById("supRD").style.display = "block";
-          document.getElementById("formRD").style.display = "block";
-        }else if (userData.pmOAUTH2 != null && userData.pmOAUTH2 != ""){
-          document.getElementById("debridService").value = "Premiumize";
-          document.getElementById("initPMbutton").textContent = "Reauthorize Deflix";
-          document.getElementById("initPMbutton").style.backgroundColor = "#44aa44";
-          document.getElementById("initPMbutton").style.border = "#44aa44";
-          document.getElementById("installPMbutton").style.display = "block";
-          document.getElementById("formPM").style.display = "block";
-        }else{
-          // TODO: Show an error message
-          console.error("Got a hash in the URL but it doesn't seem to be RD or PM")
-        }
+      // No need to check for the URL hash here, as during the OAuth2 flow,
+      // deflix-stremio is never redirecting back to this page, only to its own hosted "/configure#..." page.
+
+      if (service === "RealDebrid") {
+        document.getElementById("formRD").style.display = "block";
+      } else if (service === "AllDebrid"){
+        document.getElementById("formAD").style.display = "block";
+      } else if (service === "Premiumize"){
+        document.getElementById("formPM").style.display = "block";
       }
     }
 
     function initRD() {
-      window.location.href = window.location.protocol+"//"+window.location.host+"/oauth2/init/rd";
+      window.location.href = "https://stremio.deflix.tv/oauth2/init/rd";
     }
 
     function installRD() {
@@ -180,9 +153,9 @@
         userData.rdRemote = true;
       }
       encoded = encode(userData);
-      document.getElementById("urlRD").value = window.location.protocol+"//"+window.location.host+"/"+ encoded+"/manifest.json";
+      document.getElementById("urlRD").value = "https://stremio.deflix.tv/"+ encoded+"/manifest.json";
       document.getElementById("installInfoRD").style.display = "block";
-      window.location.href = "stremio://"+window.location.host+"/" + encoded + "/manifest.json";
+      window.location.href = "stremio://stremio.deflix.tv/" + encoded + "/manifest.json";
     }
 
     function installAD() {
@@ -195,21 +168,21 @@
         userData = {adKey: apiKey};
 
         encoded = encode(userData);
-        document.getElementById("urlAD").value = window.location.protocol+"//"+window.location.host+"/"+ encoded+"/manifest.json";
+        document.getElementById("urlAD").value = "https://stremio.deflix.tv/"+ encoded+"/manifest.json";
         document.getElementById("installInfoAD").style.display = "block";
-        window.location.href = "stremio://"+window.location.host+"/" + encoded + "/manifest.json";
+        window.location.href = "stremio://stremio.deflix.tv/" + encoded + "/manifest.json";
       }
     }
 
     function initPM() {
-      window.location.href = window.location.protocol+"//"+window.location.host+"/oauth2/init/pm";
+      window.location.href = "https://stremio.deflix.tv/oauth2/init/pm";
     }
 
     function installPM() {
       encoded = window.location.hash.substring(1)
-      document.getElementById("urlPM").value = window.location.protocol+"//"+window.location.host+"/"+ encoded+"/manifest.json";
+      document.getElementById("urlPM").value = "https://stremio.deflix.tv/"+ encoded+"/manifest.json";
       document.getElementById("installInfoPM").style.display = "block";
-      window.location.href = "stremio://"+window.location.host+"/" + encoded + "/manifest.json";
+      window.location.href = "stremio://stremio.deflix.tv/" + encoded + "/manifest.json";
     }
 
     function encode(userData) {
