@@ -135,6 +135,16 @@
         document.getElementById("voucherCode").innerHTML = Http.responseText;
       }
       // TODO: take care of error responses
+
+      // Update voucher count
+      const Http2 = new XMLHttpRequest();
+      // const url='http://localhost:8081/count';
+      const url2='https://pm-promo.deflix.tv/count';
+      Http2.open("GET", url2);
+      Http2.send();
+      Http2.onreadystatechange = (e) => {
+        document.getElementById("voucherCount").innerHTML = Http2.responseText;
+      }
     }
 
     function installPM() {
