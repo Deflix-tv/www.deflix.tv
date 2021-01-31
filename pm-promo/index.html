@@ -108,6 +108,10 @@
           // window.location.href = "http://localhost:5500/pm-promo";
           window.location.href = "https://www.deflix.tv/pm-promo";
         }else if (userData.pmOAUTH2 != null && userData.pmOAUTH2 != ""){
+          // Mark that authorization was done
+          document.getElementById("initPMbutton").textContent = "Reauthorize Deflix";
+          document.getElementById("initPMbutton").style.backgroundColor = "#44aa44";
+          document.getElementById("initPMbutton").style.border = "#44aa44";
           // Make buttons visible
           document.getElementById("voucherButton").disabled = false;
           document.getElementById("installPMbutton").disabled = false;
