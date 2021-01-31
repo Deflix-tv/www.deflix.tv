@@ -130,10 +130,10 @@
       const url='https://pm-promo.deflix.tv/voucher';
       Http.withCredentials = true;
       Http.open("GET", url);
-      Http.send();
       Http.onreadystatechange = (e) => {
         document.getElementById("voucherCode").innerHTML = Http.responseText;
       }
+      Http.send();
       // TODO: take care of error responses
 
       // Update voucher count
@@ -141,10 +141,10 @@
       // const url='http://localhost:8081/count';
       const url2='https://pm-promo.deflix.tv/count';
       Http2.open("GET", url2);
-      Http2.send();
       Http2.onreadystatechange = (e) => {
         document.getElementById("voucherCount").innerHTML = Http2.responseText;
       }
+      Http2.send();
     }
 
     function installPM() {
