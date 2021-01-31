@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link rel="icon" href="/favicon.ico">
+  <link rel="stylesheet" href="/mvp.css">
+  <link rel="stylesheet" href="/deflix.css">
+
+  <meta charset="utf-8">
+  <meta name="description" content="Debrid flicks - stream movies and TV shows without torrenting">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Deflix - Debrid flicks</title>
+
+   <!-- Fathom - simple website analytics - https://github.com/usefathom/fathom -->
+   <script>
+    (function (f, a, t, h, o, m) {
+       a[h] = a[h] || function () {
+          (a[h].q = a[h].q || []).push(arguments)
+       };
+       o = f.createElement('script'),
+          m = f.getElementsByTagName('script')[0];
+       o.async = 1; o.src = t; o.id = 'fathom-script';
+       m.parentNode.insertBefore(o, m)
+    })(document, window, '//fathom.deflix.tv/tracker.js', 'fathom');
+    fathom('set', 'siteId', 'HWVDW');
+    fathom('trackPageview');
+ </script>
+ <!-- / Fathom -->
+</head>
+
+<body onload="showForm()">
+  <header>
+    <nav>
+      <a href="/"><img alt="Deflix" src="/images/Letters.png" width=120px></a>
+      <ul>
+        <li><a href="/">Home ↗</a></li>
+        <li>Premiumize promo</li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <article>
+      <header>
+        <h2>Deflix ❤️ <a href="https://www.premiumize.me" target="_blank">Premiumize ↗</a></h2>
+      </header>
+      <p><a href="https://www.premiumize.me" target="_blank">Premiumize ↗</a> is a debrid service that 1. gives you premium access to many One-Click Hosters (OCH)
+        and 2. lets you download torrents to their servers and caches them, so they're often instantly available as soon as you add a torrent. Premiumize offers many more features but let's focus on the second point here: The torrent never touches your PC/smartphone, and you're never uploading anything - you're not taking part in any P2P torrenting.</p>
+      <p>But instead of having to manually search for torrents and then download the cached file from Premiumize, or stream it in the webbrowser,
+        you can make your life much easier with <a href="https://www.stremio.com/" target="_blank">Stremio ↗</a> and the Deflix addon:
+        The <em>Deflix addon for Stremio</em> finds movies and TV shows from many different sources (YTS, The Pirate Bay, 1337x, RARBG and ibit) and automatically
+        turns them into cached HTTP streams with a debrid service, where <b>Premiumize is one of the best and most popular</b>, for high speed 4k streaming and <mark>no P2P uploading</mark>.</p>
+      <p>The Deflix addon is open source and under active development: <a href="https://www.github.com/doingodswork/deflix-stremio" target="_blank">Source code ↗</a></p>
+    </article>
+    <section>
+      <header>
+        <h2>Voucher giveaway</h2>
+        <p>We want to celebrate the recent addition of supporting Premiumize in the Deflix addon by <b>giving away 420 Premiumize vouchers!</b></p>
+        <p>Eeach voucher gives you <b>14 days of premium access</b> on Premiumize.<br>
+          ⚠️<i>They can only be redeemed by free accounts and are only valid until 2020-02-18</i>⚠️</p>
+        <p>There are <samp id="voucherCount">🔃</samp> vouchers left!</p>
+      </header>
+      <form>
+        <h3>1. Create a Premiumize account</h3>
+        <p>If you don't have an account yet, create one at <a href="https://www.premiumize.me/register" target="_blank">https://www.premiumize.me/register ↗</a></p>
+        <h3>2. Authorize Deflix</h3>
+        <p>The Deflix addon requires access to Premiumize, so you need to authorize it:</p>
+        <button id="initPMbutton" type="button" onclick="initPM(); return false;">Authorize Deflix</button>
+        <h3>3. Get your voucher</h3>
+        <button id="voucherButton" type="button" disabled onclick="getVoucher(); return false;">Get voucher</button>
+        <p>Voucher: <samp id="voucherCode"></samp></p>
+        <h3>4. Redeem your voucher</h3>
+        <p>Redeem your voucher at <a href="https://www.premiumize.me/account" target="_blank">https://www.premiumize.me/account ↗</a></p>
+        <h3>5. Install the Deflix addon</h3>
+        <p>This assumes you have installed Stremio already. If you haven't done that yet, you can do it at <a href="https://www.stremio.com/downloads" target="_blank">https://www.stremio.com/downloads ↗</a></p>
+        <button id="installPMbutton" type="button" disabled onclick="installPM(); return false;">Install</button>
+        <div id="installInfoPM" style="display: none;">
+          <p>ℹ️ If the installation form doesn't work, you can just paste the addon URL into the search box in the
+            Stremio addon section:<br>
+          <input type="text" id="urlPM" readonly><button onclick="copy('urlPM'); return false;" title="Copy to clipboard">📋</button></p>
+        </div>
+      </form>
+    </section>
+  </main>
+  <footer>
+    <hr>
+    <p>Made by <em><a href="https://www.github.com/doingodswork/" target="_blank">doingodswork ↗</a></em></p>
+  </footer>
+
+  <script>
+    function showForm() {
+      // First update the voucher count
+      const Http = new XMLHttpRequest();
+      // const url='http://localhost:8081/count';
+      const url='https://pm-promo.deflix.tv/count';
+      Http.open("GET", url);
+      Http.send();
+      Http.onreadystatechange = (e) => {
+        document.getElementById("voucherCount").innerHTML = Http.responseText;
+      }
+
+      // If a hash is set, we're in the redirect after RealDebrid or Premiumize authorization.
+      tokenHash = window.location.hash;
+      if (tokenHash != ""){
+        userData = decode(window.location.hash.substring(1));
+        // If the decoding failed, maybe the user entered bogus data, potentially accidentally. Revert to regular page to start anew.
+        if (userData == null){
+          // window.location.href = "http://localhost:5500/pm-promo";
+          // window.location.href = "https://www.deflix.tv/pm-promo";
+        }else if (userData.pmOAUTH2 != null && userData.pmOAUTH2 != ""){
+          // Make buttons visible
+          document.getElementById("voucherButton").disabled = false;
+          document.getElementById("installPMbutton").disabled = false;
+        }else{
+          // TODO: Show an error message
+          console.error("Got a hash in the URL but it doesn't seem to be PM");
+        }
+      }
+    }
+
+    function initPM() {
+      // window.location.href = "http://localhost:8081/init";
+      window.location.href = "https://pm-promo.deflix.tv/init";
+    }
+
+    function getVoucher() {
+      const Http = new XMLHttpRequest();
+      // Includes tokenHash in cookie, which was set by "/redirect" handler after redirecting from Premiumize to deflix-stremio to pm-promo.
+      // const url='http://localhost:8081/voucher';
+      const url='https://pm-promo.deflix.tv/voucher';
+      Http.withCredentials = true;
+      Http.open("GET", url);
+      Http.send();
+      Http.onreadystatechange = (e) => {
+        document.getElementById("voucherCode").innerHTML = Http.responseText;
+      }
+      // TODO: take care of error responses
+    }
+
+    function installPM() {
+      encoded = window.location.hash.substring(1);
+      // document.getElementById("urlPM").value = "http://localhost:8080/"+ encoded+"/manifest.json";
+      document.getElementById("urlPM").value = "https://stremio-staging.deflix.tv/"+ encoded+"/manifest.json";
+      // document.getElementById("urlPM").value = "https://stremio.deflix.tv/"+ encoded+"/manifest.json";
+      document.getElementById("installInfoPM").style.display = "block";
+      // window.location.href = "stremio://localhost:8080/" + encoded + "/manifest.json";
+      window.location.href = "stremio://stremio-staging.deflix.tv/" + encoded + "/manifest.json";
+      // window.location.href = "stremio://stremio.deflix.tv/" + encoded + "/manifest.json";
+    }
+
+    function encode(userData) {
+        // Encode to Base64, make URL-safe, remove padding (leading to Base64URL as described in RFC 4648).
+        return btoa(JSON.stringify(userData)).replace(/\+/g, '-').replace(/\//g, '_').split('=')[0];
+    }
+
+    function decode(encodedUserData) {
+        // Turn Base64URL encoding into regular Base64 decoding, decode from Base64, parse as JSON.
+        try{
+          return JSON.parse(atob(encodedUserData.replace(/-/g, '+').replace(/_/g, '/')));
+        } catch (e){
+          // TODO: Show an error message
+          console.error(e);
+          return null;
+        }
+    }
+
+    function copy(id){
+      document.getElementById(id).select();
+      document.execCommand("copy");
+    }
+  </script>
+</body>
+
+</html>
