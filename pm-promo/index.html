@@ -106,7 +106,7 @@
         // If the decoding failed, maybe the user entered bogus data, potentially accidentally. Revert to regular page to start anew.
         if (userData == null){
           // window.location.href = "http://localhost:5500/pm-promo";
-          // window.location.href = "https://www.deflix.tv/pm-promo";
+          window.location.href = "https://www.deflix.tv/pm-promo";
         }else if (userData.pmOAUTH2 != null && userData.pmOAUTH2 != ""){
           // Make buttons visible
           document.getElementById("voucherButton").disabled = false;
