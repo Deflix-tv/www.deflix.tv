@@ -55,134 +55,14 @@
     <section>
       <header>
         <h2>Voucher giveaway</h2>
-        <p>We want to celebrate the recent addition of supporting Premiumize in the Deflix addon by <b>giving away 420 Premiumize vouchers!</b></p>
-        <p>Eeach voucher gives you <b>14 days of premium access</b> on Premiumize.<br>
-          ⚠️<i>They can only be redeemed by free accounts and are only valid until 2021-02-18</i>⚠️</p>
-        <p>There are <samp id="voucherCount">🔃</samp> vouchers left!</p>
+        <p>The promo is over - sorry!</p>
       </header>
-      <form>
-        <h3>1. Create a Premiumize account</h3>
-        <p>If you don't have an account yet, create one at <a href="https://www.premiumize.me/register" target="_blank">https://www.premiumize.me/register ↗</a></p>
-        <h3>2. Authorize Deflix</h3>
-        <p>The Deflix addon requires access to Premiumize, so you need to authorize it:</p>
-        <button id="initPMbutton" type="button" onclick="initPM(); return false;">Authorize Deflix</button>
-        <h3>3. Get your voucher</h3>
-        <button id="voucherButton" type="button" disabled onclick="getVoucher(); return false;">Get voucher</button>
-        <p>Voucher: <samp id="voucherCode"></samp></p>
-        <h3>4. Redeem your voucher</h3>
-        <p>Redeem your voucher at <a href="https://www.premiumize.me/account" target="_blank">https://www.premiumize.me/account ↗</a></p>
-        <h3>5. Install the Deflix addon</h3>
-        <p>This assumes you have installed Stremio already. If you haven't done that yet, you can do it at <a href="https://www.stremio.com/downloads" target="_blank">https://www.stremio.com/downloads ↗</a></p>
-        <button id="installPMbutton" type="button" disabled onclick="installPM(); return false;">Install</button>
-        <div id="installInfoPM" style="display: none;">
-          <p>ℹ️ If the installation form doesn't work, you can just paste the addon URL into the search box in the
-            Stremio addon section:<br>
-          <input type="text" id="urlPM" readonly><button onclick="copy('urlPM'); return false;" title="Copy to clipboard">📋</button></p>
-        </div>
-      </form>
     </section>
   </main>
   <footer>
     <hr>
     <p>Made by <em><a href="https://www.github.com/doingodswork/" target="_blank">doingodswork ↗</a></em></p>
   </footer>
-
-  <script>
-    function showForm() {
-      // First update the voucher count
-      const Http = new XMLHttpRequest();
-      // const url='http://localhost:8081/count';
-      const url='https://pm-promo.deflix.tv/count';
-      Http.open("GET", url);
-      Http.send();
-      Http.onreadystatechange = (e) => {
-        document.getElementById("voucherCount").innerHTML = Http.responseText;
-      }
-
-      // If a hash is set, we're in the redirect after RealDebrid or Premiumize authorization.
-      tokenHash = window.location.hash;
-      if (tokenHash != ""){
-        userData = decode(window.location.hash.substring(1));
-        // If the decoding failed, maybe the user entered bogus data, potentially accidentally. Revert to regular page to start anew.
-        if (userData == null){
-          // window.location.href = "http://localhost:5500/pm-promo";
-          window.location.href = "https://www.deflix.tv/pm-promo";
-        }else if (userData.pmOAUTH2 != null && userData.pmOAUTH2 != ""){
-          // Mark that authorization was done
-          document.getElementById("initPMbutton").textContent = "Reauthorize Deflix";
-          document.getElementById("initPMbutton").style.backgroundColor = "#44aa44";
-          document.getElementById("initPMbutton").style.border = "#44aa44";
-          // Make buttons visible
-          document.getElementById("voucherButton").disabled = false;
-          document.getElementById("installPMbutton").disabled = false;
-        }else{
-          // TODO: Show an error message
-          console.error("Got a hash in the URL but it doesn't seem to be PM");
-        }
-      }
-    }
-
-    function initPM() {
-      // window.location.href = "http://localhost:8081/init";
-      window.location.href = "https://pm-promo.deflix.tv/init";
-    }
-
-    function getVoucher() {
-      const Http = new XMLHttpRequest();
-      // Includes tokenHash in cookie, which was set by "/redirect" handler after redirecting from Premiumize to deflix-stremio to pm-promo.
-      // const url='http://localhost:8081/voucher';
-      const url='https://pm-promo.deflix.tv/voucher';
-      Http.withCredentials = true;
-      Http.open("GET", url);
-      Http.onreadystatechange = (e) => {
-        document.getElementById("voucherCode").innerHTML = Http.responseText;
-      }
-      Http.send();
-      // TODO: take care of error responses
-
-      // Update voucher count
-      const Http2 = new XMLHttpRequest();
-      // const url='http://localhost:8081/count';
-      const url2='https://pm-promo.deflix.tv/count';
-      Http2.open("GET", url2);
-      Http2.onreadystatechange = (e) => {
-        document.getElementById("voucherCount").innerHTML = Http2.responseText;
-      }
-      Http2.send();
-    }
-
-    function installPM() {
-      encoded = window.location.hash.substring(1);
-      // document.getElementById("urlPM").value = "http://localhost:8080/"+ encoded+"/manifest.json";
-      document.getElementById("urlPM").value = "https://stremio.deflix.tv/"+ encoded+"/manifest.json";
-      // document.getElementById("urlPM").value = "https://stremio.deflix.tv/"+ encoded+"/manifest.json";
-      document.getElementById("installInfoPM").style.display = "block";
-      // window.location.href = "stremio://localhost:8080/" + encoded + "/manifest.json";
-      window.location.href = "stremio://stremio.deflix.tv/" + encoded + "/manifest.json";
-      // window.location.href = "stremio://stremio.deflix.tv/" + encoded + "/manifest.json";
-    }
-
-    function encode(userData) {
-        // Encode to Base64, make URL-safe, remove padding (leading to Base64URL as described in RFC 4648).
-        return btoa(JSON.stringify(userData)).replace(/\+/g, '-').replace(/\//g, '_').split('=')[0];
-    }
-
-    function decode(encodedUserData) {
-        // Turn Base64URL encoding into regular Base64 decoding, decode from Base64, parse as JSON.
-        try{
-          return JSON.parse(atob(encodedUserData.replace(/-/g, '+').replace(/_/g, '/')));
-        } catch (e){
-          // TODO: Show an error message
-          console.error(e);
-          return null;
-        }
-    }
-
-    function copy(id){
-      document.getElementById(id).select();
-      document.execCommand("copy");
-    }
-  </script>
 </body>
 
 </html>
